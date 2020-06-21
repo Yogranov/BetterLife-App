@@ -1,3 +1,4 @@
+import 'package:betterlife/screens/home.dart';
 import 'package:betterlife/screens/login.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +11,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'BetterLife',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Login(),
+      home: Home(),
     );
   }
 }
