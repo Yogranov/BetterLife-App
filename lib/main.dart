@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           bodyText2: TextStyle(color: Colors.grey[800]),
         ),
       ),
-      home: SafeArea(child: MoleList()),
+      home: SafeArea(child: Home()),
     );
   }
 }
