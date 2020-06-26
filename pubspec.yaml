@@ -26,6 +26,7 @@ dependencies:
 
   image_picker:
   percent_indicator: ^2.1.5
+  http:
 
     
   # The following adds the Cupertino Icons font to your application.

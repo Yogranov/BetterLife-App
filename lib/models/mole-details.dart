@@ -2,17 +2,17 @@ import 'dart:ffi';
 
 class MoleDetails {
 
-  int id;
-  int moleId;
   String imgUrl;
   int size;
   String color;
-  double benignPred;
-  double malignantPred;
-  DateTime createTime;
-  int doctorId;
+  int benignPred;
+  int malignantPred;
+  String createTime;
+  String doctor;
   String diagnosis;
-  int riskLevel;
-  DateTime diagnosisCreateTime;
+  String riskLevel;
+  String diagnosisCreateTime;
 
+
+  MoleDetails({this.imgUrl, this.size, this.color, this.benignPred, this.malignantPred, this.createTime, this.doctor, this.diagnosis, this.riskLevel, this.diagnosisCreateTime});
 }

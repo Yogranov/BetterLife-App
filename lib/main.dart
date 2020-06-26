@@ -1,4 +1,5 @@
 import 'package:betterlife/screens/home.dart';
+import 'package:betterlife/screens/loading.dart';
 import 'package:betterlife/screens/login.dart';
 import 'package:betterlife/screens/moleList.dart';
 import 'package:betterlife/screens/molePage.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
           bodyText2: TextStyle(color: Colors.grey[800]),
         ),
       ),
-      home: SafeArea(child: Home()),
+      home: SafeArea(child: Loading()),
     );
   }
 }
