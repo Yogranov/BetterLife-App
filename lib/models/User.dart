@@ -1,6 +1,7 @@
 import 'package:betterlife/models/mole-details.dart';
 import 'package:betterlife/models/mole.dart';
 import 'package:betterlife/shared_ui/constant.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
@@ -38,10 +39,17 @@ class User {
 
     List<Mole> moles = [];
     String url = 'https://betterlife.845.co.il/api/flutter/getMolesData.php';
-
+    String imgUrl = 'https://betterlife.845.co.il/api/flutter/getImg.php';
     Map data = {
       'TOKEN': Constant.apiToken,
       'userToken': token
+    };
+
+    Map imgData = {
+      'TOKEN': Constant.apiToken,
+      'userToken': token,
+      'dir': '',
+      'imgUrl': ''
     };
 
     var response = await http.post(url, body: data);
@@ -56,23 +64,39 @@ class User {
 
       Map<String, dynamic> mole = convert.jsonDecode(jsonData[i]);
       for (var i = 0; i < mole["details"].length; i++) {
-
         Map<String, dynamic> moleDetailsJson = mole["details"][i];
+        imgData['imgUrl'] = moleDetailsJson["imgUrl"];
+        
+        imgData['dir'] = 'regular';
+        http.Response imgRequest = await http.post(imgUrl, body: imgData);
+        var imgBytes = imgRequest.bodyBytes;
+
+        imgData['dir'] = 'figure';
+        http.Response figureRequest = await http.post(imgUrl, body: imgData);
+        var figureBytes = figureRequest.bodyBytes;
+
+        imgData['dir'] = 'surface';
+        http.Response surfaceRequest = await http.post(imgUrl, body: imgData);
+        var surfaceBytes = surfaceRequest.bodyBytes;
+        
         moleDetails.add(MoleDetails(
           imgUrl: moleDetailsJson["imgUrl"],
+          img: Image.memory(imgBytes),
+          figure: Image.memory(figureBytes),
+          surface: Image.memory(surfaceBytes),
           size: moleDetailsJson["size"],
           color: moleDetailsJson["color"],
           benignPred: moleDetailsJson["benignPred"],
           malignantPred: moleDetailsJson["malignantPred"],
-          createTime: moleDetailsJson["createTime"],
+          createTime: DateTime.parse(moleDetailsJson["createTime"]),
           doctor: moleDetailsJson["doctor"] ?? '',
-          diagnosis: moleDetailsJson["diagnosis"] ?? '',
+          diagnosis: moleDetailsJson["diagnosis"] ?? 'אין אבחנת רופא',
           riskLevel: moleDetailsJson["riskLevel"] ?? '',
-          diagnosisCreateTime: moleDetailsJson["diagnosisCreateTime"] ?? '',
+          diagnosisCreateTime: DateTime.parse(moleDetailsJson["diagnosisCreateTime"]) ?? null,
         ));
 
       }
-      moles.add(Mole(id: mole["Id"], location: mole["Location"], createTime: mole["CreateTime"], details: moleDetails));
+      moles.add(Mole(id: mole["Id"], location: mole["Location"], createTime: DateTime.parse(mole["CreateTime"]), details: moleDetails));
     }
 
     return moles;

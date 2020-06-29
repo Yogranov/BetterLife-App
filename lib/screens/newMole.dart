@@ -33,13 +33,14 @@ class _NewMoleState extends State<NewMole> {
   @override
   Widget build(BuildContext context) {
 
-    return Column(
+    return ListView(
       children: <Widget>[
         SizedBox(height: 10,),
         Container(
           height: 40,
           child: 
             Text("הוספת שומה",
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 24
             ),
