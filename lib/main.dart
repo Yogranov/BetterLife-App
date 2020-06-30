@@ -1,8 +1,4 @@
 import 'package:betterlife/screens/home.dart';
-import 'package:betterlife/screens/loading.dart';
-import 'package:betterlife/screens/login.dart';
-import 'package:betterlife/screens/moleList.dart';
-import 'package:betterlife/screens/molePage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,11 +13,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'BetterLife',
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.grey[200]  ,
         primarySwatch: Colors.lightGreen,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        scaffoldBackgroundColor: Colors.grey[50],
         textTheme: TextTheme(
-          headline6: TextStyle(color:  Colors.grey[800]),
+          headline4: TextStyle(color:  Colors.grey[50]),
           bodyText2: TextStyle(color: Colors.grey[800]),
         ),
       ),

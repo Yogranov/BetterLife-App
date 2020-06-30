@@ -25,7 +25,7 @@ class User {
     };
 
     var response = await http.post(url, body: data);
-    var jsonData = null;
+    var jsonData ;
     if (response.statusCode == 200)
       jsonData = convert.jsonDecode(response.body);
     else
@@ -53,7 +53,7 @@ class User {
     };
 
     var response = await http.post(url, body: data);
-    List<dynamic> jsonData = null;
+    List<dynamic> jsonData = [];
     if (response.statusCode == 200)
       jsonData = convert.jsonDecode(response.body);
     else
@@ -78,7 +78,6 @@ class User {
         imgData['dir'] = 'surface';
         http.Response surfaceRequest = await http.post(imgUrl, body: imgData);
         var surfaceBytes = surfaceRequest.bodyBytes;
-        
         moleDetails.add(MoleDetails(
           imgUrl: moleDetailsJson["imgUrl"],
           img: Image.memory(imgBytes),
@@ -92,7 +91,7 @@ class User {
           doctor: moleDetailsJson["doctor"] ?? '',
           diagnosis: moleDetailsJson["diagnosis"] ?? 'אין אבחנת רופא',
           riskLevel: moleDetailsJson["riskLevel"] ?? '',
-          diagnosisCreateTime: DateTime.parse(moleDetailsJson["diagnosisCreateTime"]) ?? null,
+          diagnosisCreateTime: DateTime.parse(moleDetailsJson["diagnosisCreateTime"] ?? '1990-01-01'),
         ));
 
       }

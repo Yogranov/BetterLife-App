@@ -28,6 +28,8 @@ dependencies:
   percent_indicator: ^2.1.5
   http:
   intl:
+  curved_navigation_bar:
+  carousel_slider:
 
     
   # The following adds the Cupertino Icons font to your application.

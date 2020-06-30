@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 
@@ -13,10 +12,10 @@ class MoleDetails {
   int benignPred;
   int malignantPred;
   DateTime createTime;
-  String doctor;
-  String diagnosis;
-  String riskLevel;
-  DateTime diagnosisCreateTime;
+  String doctor = null;
+  String diagnosis = null;
+  String riskLevel = null;
+  DateTime diagnosisCreateTime = null;
 
 
   MoleDetails({this.imgUrl, this.img, this.figure, this.surface, this.size, this.color, this.benignPred, this.malignantPred, this.createTime, this.doctor, this.diagnosis, this.riskLevel, this.diagnosisCreateTime});
