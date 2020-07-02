@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class NewMole extends StatefulWidget {
@@ -14,10 +15,29 @@ class _NewMoleState extends State<NewMole> {
 
   _openCamera (BuildContext context) async {
     File pic = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    if(pic != null) {
+      File cropped = await ImageCropper.cropImage(
+        sourcePath: pic.path,
+        aspectRatio: CropAspectRatio(ratioX: 4, ratioY: 3),
+        compressQuality: 100,
+        maxWidth: 400,
+        maxHeight: 300,
+        compressFormat: ImageCompressFormat.jpg,
+        androidUiSettings: AndroidUiSettings(
+          toolbarColor: Colors.green,
+          toolbarTitle: "נא לסמן את השומה",
+          statusBarColor: Colors.deepOrange.shade900,
+          backgroundColor: Colors.white
+        ),
+
+      );
+
     this.setState(() {
-      molePic = pic;
+      molePic = cropped;
       });
-    // Navigator.of(context).pop();
+
+    }
   }
 
   Widget _imgOrText (BuildContext context) {
