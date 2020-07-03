@@ -101,4 +101,23 @@ class User {
     return moles;
   }
 
+  Future<dynamic> getStatistics() async {
+    String url = 'https://betterlife.845.co.il/api/flutter/getStatistics.php';
+
+    Map data = {
+      'TOKEN': Constant.apiToken,
+      'userToken': token
+    };
+
+    var response = await http.post(url, body: data);
+    var jsonData ;
+    if (response.statusCode == 200)
+      jsonData = convert.jsonDecode(response.body);
+    else
+      print('Request failed with status: ${response.statusCode}.');
+
+    return jsonData;
+    
+  }
+
 }
