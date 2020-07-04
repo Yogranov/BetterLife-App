@@ -27,41 +27,99 @@ class _StatisticsPageState extends State<StatisticsPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Row(
-          children: <Widget>[
-            const SizedBox(
-              height: 18,
-            ),
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: PieChart(
-                  PieChartData(
-                    borderData: FlBorderData(
-                      show: false,
+        Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 20.0,),
+              Padding(
+              padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+              child: Card(
+                child: 
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    SizedBox(height: 10,),
+                    Text(
+                      "כמות השומות שנבדקו: ${widget.statistics["molesCount"]}",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontSize: 18)),
+                    SizedBox(height: 10,),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(backgroundImage: AssetImage('assets/moleSymbol.png')),
                     ),
-                    sectionsSpace: 0,
-                    centerSpaceRadius: 40,
-                    sections: buildDiagram()[1]
-                  ),
+                    SizedBox(height: 10,),
+                  ],
                 ),
               ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+            child: Card(
+              child: 
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  SizedBox(height: 10,),
+                  Text(
+                    "בדיקה אחרונה בוצע לפני ${widget.statistics["lastCheck"]} ימים",
+                    textAlign: TextAlign.right,
+                    style: TextStyle(fontSize: 18)),
+                  SizedBox(height: 10,),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircleAvatar(backgroundImage: AssetImage('assets/moleSymbol.png')),
+                  ),
+                  SizedBox(height: 10,),
+                ],
+              ),
             ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
+          ),
+
+          ],
+        ),
+
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Text("סיכום אבחון רופאים"),
+              Row(
               children: <Widget>[
-                ...buildDiagram()[0],
                 SizedBox(
                   height: 18,
                 ),
+                Expanded(
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: PieChart(
+                      PieChartData(
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        sectionsSpace: 0,
+                        centerSpaceRadius: 40,
+                        sections: buildDiagram()[1]
+                      ),
+                    ),
+                  ),
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    ...buildDiagram()[0],
+                    SizedBox(
+                      height: 18,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: 28,
+                ),
               ],
-            ),
-            const SizedBox(
-              width: 28,
             ),
           ],
         ),
