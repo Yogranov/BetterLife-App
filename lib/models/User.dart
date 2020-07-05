@@ -127,7 +127,7 @@ class User {
     };
 
     var response = await http.post(url, body: data);
-    var jsonData ;
+    var jsonData;
     if (response.statusCode == 200)
       jsonData = convert.jsonDecode(response.body);
     else

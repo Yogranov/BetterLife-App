@@ -34,6 +34,7 @@ dependencies:
   shared_preferences:
   fl_chart:
   autocomplete_textfield:
+  rflutter_alert:
 
     
   # The following adds the Cupertino Icons font to your application.

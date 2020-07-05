@@ -2,11 +2,11 @@ import 'package:betterlife/models/User.dart';
 import 'package:flutter/material.dart';
 
 const textInputDecoration = InputDecoration(
-  fillColor: Colors.white,
+  fillColor: Color(0xffe9e9e9),
   filled: true,
-  contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+  contentPadding: EdgeInsets.symmetric(horizontal: 20),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.white, width: 2.0)
+    borderSide: BorderSide(color: Color(0xffd9d9d9), width: 2.0)
   ),
   focusedBorder: OutlineInputBorder(
     borderSide: BorderSide(color: Colors.pink, width: 2.0)
