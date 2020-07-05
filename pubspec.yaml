@@ -33,6 +33,7 @@ dependencies:
   image_cropper:
   shared_preferences:
   fl_chart:
+  autocomplete_textfield:
 
     
   # The following adds the Cupertino Icons font to your application.

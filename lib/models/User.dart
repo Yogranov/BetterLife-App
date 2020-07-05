@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import 'Address.dart';
+
 class User {
 
   String id;
@@ -12,9 +14,14 @@ class User {
   String firstName;
   String lastName;
   String token;
+  String phoneNumber;
+  Address address;
+  String personId;
+  DateTime birthdate;
+  int haveHistory;
+  int sex;
 
-
-  User({this.id, this.email, this.firstName, this.lastName, this.token});
+  User({this.id, this.email, this.firstName, this.lastName, this.token, this.phoneNumber, this.address, this.birthdate, this.haveHistory, this.personId, this.sex});
 
   static Future<User> getUserByToken(String token) async {
     String url = 'https://betterlife.845.co.il/api/flutter/getUserData.php';
@@ -23,7 +30,6 @@ class User {
       'TOKEN': Constant.apiToken,
       'userToken': token
     };
-
     var response = await http.post(url, body: data);
     var jsonData ;
     if (response.statusCode == 200)
@@ -31,12 +37,24 @@ class User {
     else
       print('Request failed with status: ${response.statusCode}.');
     
-    return User(id: jsonData['Id'].toString(), email: jsonData['Email'], firstName: jsonData['FirstName'], lastName: jsonData['LastName'], token: token);
+    Address address = await Address.getCity(jsonData['address'], jsonData['cityId']);
+
+    return User(
+      id: jsonData['Id'].toString(),
+      email: jsonData['Email'],
+      firstName: jsonData['FirstName'],
+      lastName: jsonData['LastName'],
+      token: token,
+      phoneNumber: jsonData["phoneNumber"],
+      address: address,
+      birthdate: DateTime.parse(jsonData['birthdate']),
+      personId: jsonData['personId'],
+      haveHistory: jsonData['haveHistory'],
+      sex: jsonData['sex']
+    );
   }
 
   Future<List> getMoles() async {
-
-
     List<Mole> moles = [];
     String url = 'https://betterlife.845.co.il/api/flutter/getMolesData.php';
     String imgUrl = 'https://betterlife.845.co.il/api/flutter/getImg.php';
@@ -97,7 +115,6 @@ class User {
       }
       moles.add(Mole(id: mole["Id"], location: mole["Location"], createTime: DateTime.parse(mole["CreateTime"]), details: moleDetails));
     }
-
     return moles;
   }
 
@@ -117,7 +134,6 @@ class User {
       print('Request failed with status: ${response.statusCode}.');
 
     return jsonData;
-    
   }
 
 }
