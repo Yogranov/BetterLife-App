@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:betterlife/models/City.dart';
 import 'package:betterlife/models/User.dart';
-import 'package:betterlife/screens/errorAlert.dart';
 import 'package:betterlife/shared_ui/constant.dart';
 import 'package:betterlife/shared_ui/settingsField.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +45,12 @@ class _SettingsState extends State<Settings> {
   GlobalKey<AutoCompleteTextFieldState<City>> key = new GlobalKey();
   static List<City> cities = new List<City>();
   bool loading = true;
-  bool error = true;
+  bool submitLoading = false;
+
+  bool changePassword;
+  String oldPassword = '';
+  String newPassword = '';
+  String repeatPassword = '';
 
   String firstName;
   String lastName;
@@ -83,7 +87,9 @@ class _SettingsState extends State<Settings> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    if(widget.user == null)
+      Navigator.pop(context);
+
     sex = widget.user.sex;
     haveHistory = widget.user.haveHistory == 1 ? true : false;
     firstName = widget.user.firstName;
@@ -95,6 +101,8 @@ class _SettingsState extends State<Settings> {
     street = widget.user.address.street;
     cityId = widget.user.address.cityId;
 
+    changePassword = false;
+
     getCities(); 
     super.initState();
   }
@@ -102,7 +110,7 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return widget.user == null ? Text('asd') : Container(
       height: 700,
       child:
         Directionality(
@@ -349,6 +357,83 @@ class _SettingsState extends State<Settings> {
                     controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
                   ),
 
+                  CheckboxListTile(
+                    title: Text("שינוי סיסמה"),
+                    value: changePassword,
+                    onChanged: (newValue) { 
+                      setState(() {
+                        changePassword = newValue; 
+                      }); 
+                    },
+                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                  ),
+
+                  !changePassword ? Column() :
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+
+                      Padding(
+                        padding: EdgeInsets.only(right: 12, top: 20, bottom: 5),
+                        child: Text('סיסמה ישנה'),
+                      ),
+                      Center(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.95,
+                          child: TextFormField(
+                            textAlign: TextAlign.right,
+                            decoration: textInputDecoration.copyWith(hintText: 'סיסמה ישנה'),
+                            validator: (val) => val.isEmpty ? 'אנא הכנס סיסמה' : null,
+                            obscureText: true,
+                            onChanged: (val) {
+                              setState(() => oldPassword = val);
+                              }
+                          ),
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.only(right: 12, top: 20, bottom: 5),
+                        child: Text('סיסמה חדשה'),
+                      ),
+                      Center(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.95,
+                          child: TextFormField(
+                            textAlign: TextAlign.right,
+                            decoration: textInputDecoration.copyWith(hintText: 'סיסמה חדשה'),
+                            validator: (val) => val.isEmpty ? 'אנא הכנס סיסמה' : null,
+                            obscureText: true,
+                            onChanged: (val) {
+                              setState(() => newPassword = val);
+                              }
+                          ),
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.only(right: 12, top: 20, bottom: 5),
+                        child: Text('אימות סיסמה'),
+                      ),
+                      Center(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.95,
+                          child: TextFormField(
+                            
+                            textAlign: TextAlign.right,
+                            decoration: textInputDecoration.copyWith(hintText: 'אימות סיסמה'),
+                            validator: (val) => val.isEmpty ? 'אנא הכנס סיסמה' : null,
+                            obscureText: true,
+                            onChanged: (val) {
+                              setState(() => repeatPassword = val);
+                              }
+                          ),
+                        ),
+                      ),
+
+
+                    ],
+                  ),
                 
                   SizedBox(height: 30,),
                   Center(
@@ -356,7 +441,7 @@ class _SettingsState extends State<Settings> {
                       color: Colors.pink[400],
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 20),
-                        child: Text(
+                        child: submitLoading ? CircularProgressIndicator() : Text(
                           'עדכון פרטים',
                           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                         ),
@@ -404,8 +489,18 @@ class _SettingsState extends State<Settings> {
       'birthdate': birthdate.toString(),
       'haveHistory': haveHistory ? '1' : '0'
     };
+
+    if(changePassword) {
+      data['changePassword'] = changePassword ? '1' : '0';
+      data['oldPassword'] = oldPassword;
+      data['newPassword'] = newPassword;
+      data['repeatPassword'] = repeatPassword;
+    }
     
     final url = "https://betterlife.845.co.il/api/flutter/updateProfile.php";
+    setState(() {
+      submitLoading = true;
+    });
 
     var response = await http.post(url, body: data);
     List<dynamic> jsonData;
@@ -414,10 +509,13 @@ class _SettingsState extends State<Settings> {
     } else {
       print("Error getting data.");
     }
-    
 
-    if(jsonData == 0) {
-      print("ok");
+    setState(() {
+      submitLoading = false;
+    });    
+
+    if(jsonData.isEmpty) {
+      Navigator.pop(context);
     }
     else {
       String error = '';
