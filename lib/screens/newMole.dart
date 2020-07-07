@@ -1,9 +1,23 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:betterlife/models/User.dart';
+import 'package:betterlife/shared_ui/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
+import 'package:path/path.dart' as path;
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+
+
 
 class NewMole extends StatefulWidget {
+  User user;
+
+  NewMole({this.user});
+
   @override
   _NewMoleState createState() => _NewMoleState();
 }
@@ -11,6 +25,17 @@ class NewMole extends StatefulWidget {
 class _NewMoleState extends State<NewMole> {
 
   File molePic;
+  int size;
+  String color;
+  String location;
+  bool submitLoading = false;
+
+
+  Future<File> file;
+  String status = '';
+  String base64Image;
+  File tmpFile;
+  String errMessage = 'Error Uploading Image';
 
 
   _openCamera (BuildContext context) async {
@@ -21,8 +46,8 @@ class _NewMoleState extends State<NewMole> {
         sourcePath: pic.path,
         aspectRatio: CropAspectRatio(ratioX: 4, ratioY: 3),
         compressQuality: 100,
-        maxWidth: 400,
-        maxHeight: 300,
+        maxWidth: 600,
+        maxHeight: 450,
         compressFormat: ImageCompressFormat.jpg,
         androidUiSettings: AndroidUiSettings(
           toolbarColor: Colors.green,
@@ -52,7 +77,6 @@ class _NewMoleState extends State<NewMole> {
   
   @override
   Widget build(BuildContext context) {
-
     return ListView(
       children: <Widget>[
         SizedBox(height: 10,),
@@ -78,8 +102,12 @@ class _NewMoleState extends State<NewMole> {
               fillColor: Colors.grey[50],
             ),
             keyboardType: TextInputType.text,
+            onChanged: (val) {
+              setState(() => location = val);
+            }
           ),
         ),
+
         Padding(
           padding: EdgeInsets.all(8.0),
           child: TextFormField(
@@ -92,6 +120,9 @@ class _NewMoleState extends State<NewMole> {
               fillColor: Colors.grey[50],
             ),
             keyboardType: TextInputType.text,
+            onChanged: (val) {
+              setState(() => size = int.parse(val));
+            }
           ),
         ),
         Padding(
@@ -105,7 +136,11 @@ class _NewMoleState extends State<NewMole> {
               filled: true,
               fillColor: Colors.grey[50],
             ),
+            
             keyboardType: TextInputType.text,
+            onChanged: (val) {
+              setState(() => color = val);
+            }
           ),
         ),
         SizedBox(height: 20,),
@@ -115,7 +150,102 @@ class _NewMoleState extends State<NewMole> {
           child:
             _imgOrText(context),
         ),
+        SizedBox(height: 30,),
+        Center(
+          child: RaisedButton(
+            color: Colors.pink[400],
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 20),
+              child: submitLoading ? CircularProgressIndicator() : Text(
+                'עדכון פרטים',
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+            onPressed: () async {
+              uploadData();
+              //Navigator.pop(context);
+            }
+          ),
+        ),
+        SizedBox(height: 30,),
       ],
     );
+  }
+
+  void uploadData() async {
+    base64Image = base64Encode(molePic.readAsBytesSync());
+ 
+    Map data = {
+      'TOKEN': Constant.apiToken,
+      'userToken': widget.user.token,
+
+      'size': size.toString(),
+      'location': location,
+      'color': color,
+      'image': base64Image,
+      //'name': molePic.path.split('/').last
+    };
+
+    print(data);
+
+    final url = "https://betterlife.845.co.il/api/flutter/uploadImg.php";
+    setState(() {
+      submitLoading = true;
+    });
+
+
+    var response = await http.post(url, body: data);
+
+    print(response.statusCode);
+
+    // var jsonData;
+    // if (response.statusCode == 200) {
+    //   jsonData = convert.jsonDecode(response.body);
+    // } else {
+    //   print("Error getting data.");
+    // }
+
+    setState(() {
+      submitLoading = false;
+    });    
+
+
+
+
+
+
+
+    // print(jsonData);
+
+
+    
+    // if(jsonData.isEmpty) {
+    //   print('ok');
+    //   // Navigator.pop(context);
+    // }
+    // else {
+    //   String error = '';
+    //   jsonData.forEach((er) {
+    //     error += er + ' -' + '\n';
+    //   });
+
+    //   Alert(
+    //     context: context,
+    //     type: AlertType.warning,
+    //     title: "שגיאה",
+    //     buttons: [
+    //     DialogButton(
+    //       child: Text(
+    //         "סגור",
+    //         style: TextStyle(color: Colors.white, fontSize: 14),
+    //       ),
+    //       onPressed: () => Navigator.pop(context),
+    //       width: 120,
+    //       height: 40,
+    //     )
+    //   ],
+    //     desc: error
+    //   ).show();
+    // }
   }
 }
