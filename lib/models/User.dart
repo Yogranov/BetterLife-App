@@ -20,7 +20,9 @@ class User {
   DateTime birthdate;
   int haveHistory;
   int sex;
-
+  List<Mole> moles;
+  Map statistics;
+  
   User({this.id, this.email, this.firstName, this.lastName, this.token, this.phoneNumber, this.address, this.birthdate, this.haveHistory, this.personId, this.sex});
 
   static Future<User> getUserByToken(String token) async {
@@ -39,7 +41,7 @@ class User {
     
     Address address = await Address.getCity(jsonData['address'], jsonData['cityId']);
 
-    return User(
+    User user =  User(
       id: jsonData['Id'].toString(),
       email: jsonData['Email'],
       firstName: jsonData['FirstName'],
@@ -50,8 +52,13 @@ class User {
       birthdate: DateTime.parse(jsonData['birthdate']),
       personId: jsonData['personId'],
       haveHistory: jsonData['haveHistory'],
-      sex: jsonData['sex']
+      sex: jsonData['sex'],
     );
+
+    user.moles = await user.getMoles();
+    user.statistics = await user.getStatistics();
+
+    return user;
   }
 
   Future<List> getMoles() async {
@@ -99,8 +106,8 @@ class User {
         moleDetails.add(MoleDetails(
           imgUrl: moleDetailsJson["imgUrl"],
           img: Image.memory(imgBytes),
-          figure: Image.memory(figureBytes),
-          surface: Image.memory(surfaceBytes),
+          figure: Image.memory(figureBytes) ?? null,
+          surface: Image.memory(surfaceBytes) ?? null,
           size: moleDetailsJson["size"],
           color: moleDetailsJson["color"],
           benignPred: moleDetailsJson["benignPred"],
@@ -115,6 +122,7 @@ class User {
       }
       moles.add(Mole(id: mole["Id"], location: mole["Location"], createTime: DateTime.parse(mole["CreateTime"]), details: moleDetails));
     }
+    this.moles = moles;
     return moles;
   }
 
@@ -133,6 +141,7 @@ class User {
     else
       print('Request failed with status: ${response.statusCode}.');
 
+    this.statistics = jsonData;
     return jsonData;
   }
 
