@@ -7,11 +7,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'home.dart';
+
 class StatisticsPage extends StatefulWidget {
   Map statistics;
   Map diagram;
-
   User user;
+
+  
 
   StatisticsPage(user) {
     this.user = user;
@@ -26,6 +29,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
   int touchedIndex;
 
   Future<Null> refreshData() async {
+    Home.currentPage = 0;
+    
     await widget.user.getStatistics();
     widget.diagram = (widget.user.statistics["riskDiagram"]);
     setState(() {
