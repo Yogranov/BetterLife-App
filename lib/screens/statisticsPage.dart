@@ -28,9 +28,7 @@ class StatisticsPage extends StatefulWidget {
 class _StatisticsPageState extends State<StatisticsPage> {
   int touchedIndex;
 
-  Future<Null> refreshData() async {
-    Home.currentPage = 0;
-    
+  Future<Null> refreshData() async {    
     await widget.user.getStatistics();
     widget.diagram = (widget.user.statistics["riskDiagram"]);
     setState(() {
@@ -42,20 +40,18 @@ class _StatisticsPageState extends State<StatisticsPage> {
     return RefreshIndicator(
       onRefresh: () => refreshData(),
       child: ListView(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                SizedBox(height: 20.0,),
+                SizedBox(height: 25.0,),
                 Padding(
-                padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+                padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 10.0),
                 child: Card(
                   child: 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      SizedBox(height: 10,),
                       Text(
                         "כמות השומות שנבדקו: ${widget.user.statistics["molesCount"]}",
                         textAlign: TextAlign.right,
@@ -65,13 +61,12 @@ class _StatisticsPageState extends State<StatisticsPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: CircleAvatar(backgroundImage: AssetImage('assets/moleSymbol.png')),
                       ),
-                      SizedBox(height: 10,),
                     ],
                   ),
                 ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+              padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 10.0),
               child: Card(
                 child: 
                 Row(
@@ -82,12 +77,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       "בדיקה אחרונה בוצע לפני ${widget.user.statistics["lastCheck"]} ימים",
                       textAlign: TextAlign.right,
                       style: TextStyle(fontSize: 18)),
-                    SizedBox(height: 10,),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(backgroundImage: AssetImage('assets/moleSymbol.png')),
                     ),
-                    SizedBox(height: 10,),
                   ],
                 ),
               ),
@@ -95,16 +88,13 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
             ],
           ),
-
+          SizedBox(height: 100,),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Text("סיכום אבחון רופאים"),
                 Row(
                 children: <Widget>[
-                  SizedBox(
-                    height: 18,
-                  ),
                   Expanded(
                     child: AspectRatio(
                       aspectRatio: 1,
@@ -131,7 +121,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 28,
                   ),
                 ],

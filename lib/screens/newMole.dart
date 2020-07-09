@@ -15,6 +15,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 
 class NewMole extends StatefulWidget {
+  
   User user;
   Function() notifyParent;
 
@@ -80,6 +81,7 @@ class _NewMoleState extends State<NewMole> {
     );
   }
   
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -88,17 +90,7 @@ class _NewMoleState extends State<NewMole> {
         key: _formKey,
         child: ListView(
           children: <Widget>[
-            SizedBox(height: 10,),
-            Container(
-              height: 40,
-              child: 
-                Text("הוספת שומה",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 24
-                ),
-              ),
-            ),
+            SizedBox(height: 20,),
             Padding(
               padding: EdgeInsets.all(8.0),
               child: TextFormField(
@@ -155,10 +147,10 @@ class _NewMoleState extends State<NewMole> {
                 }
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 10,),
             Container(
-              width: MediaQuery.of(context).size.width *0.9,
-              height: MediaQuery.of(context).size.height *0.4,
+              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
+              height: MediaQuery.of(context).size.height *0.25,
               child:
                 _imgOrText(context),
             ),
@@ -211,6 +203,7 @@ class _NewMoleState extends State<NewMole> {
 
     if (response.statusCode == 200) {
       Home.currentPage = 0;
+      
       setState(() {
         widget.notifyParent();
       });
