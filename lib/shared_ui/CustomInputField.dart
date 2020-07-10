@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class CustomInputField extends StatelessWidget {
   Icon fieldIcon;
   String hintText;
+  dynamic returnValue;
 
-  CustomInputField(this.fieldIcon, this.hintText,
+  CustomInputField(this.fieldIcon, this.hintText, this.returnValue,
       [String emailOrPassword = 'email']);
 
   @override
@@ -30,7 +31,7 @@ class CustomInputField extends StatelessWidget {
                 height: 60,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: TextField(
+                  child: TextFormField(
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: hintText,
@@ -38,6 +39,9 @@ class CustomInputField extends StatelessWidget {
                         filled: true),
                     style: TextStyle(fontSize: 20.0, color: Colors.black),
                     textAlign: TextAlign.right,
+                    onChanged: (val) {
+                        returnValue = val;
+                    }
                   ),
                 ),
               ),

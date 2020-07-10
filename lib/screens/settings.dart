@@ -10,6 +10,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'login.dart';
 
 Widget row(City city) {
    return Row(
@@ -39,6 +42,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  SharedPreferences pref;
   
   DateTime selectedDate = DateTime.now();
   AutoCompleteTextField searchTextField;
@@ -62,6 +66,10 @@ class _SettingsState extends State<Settings> {
   int cityId;
   int sex;
   bool haveHistory;
+
+  void preperePref() async {
+    pref = await SharedPreferences.getInstance();
+  }
 
   void getCities() async {
     Map data = {
@@ -87,6 +95,7 @@ class _SettingsState extends State<Settings> {
 
   @override
   void initState() {
+    preperePref();
     if(widget.user == null)
       Navigator.pop(context);
 
@@ -110,7 +119,7 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.user == null ? Text('asd') : Container(
+    return widget.user == null ? Text('Loading') : Container(
       height: 700,
       child:
         Directionality(
@@ -120,11 +129,22 @@ class _SettingsState extends State<Settings> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: Text('עריכת פרופיל', style: TextStyle(fontSize: 18),),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(right: 100.0),
+                        child: Text('עריכת פרופיל', style: TextStyle(fontSize: 18),),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.exit_to_app, size: 32,),
+                        onPressed: () async {
+                          pref.clear();
+                          pref.commit();
+                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Login()), (Route<dynamic> route) => false);
+                        },
+                      ),
+                    ],
                   ),
 
                   Padding(
@@ -179,7 +199,7 @@ class _SettingsState extends State<Settings> {
                         validator: (val) => val.isEmpty ? 'אנא הכנס טלפון טלפון' : null,
                         onChanged: (val) {
                           setState(() => phoneNumber = val);
-                          }
+                        }
                       ),
                     ),
                   ),

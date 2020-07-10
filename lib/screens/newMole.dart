@@ -161,7 +161,7 @@ class _NewMoleState extends State<NewMole> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 20),
                   child: submitLoading ? CircularProgressIndicator() : Text(
-                    'עדכון פרטים',
+                    'שלח בדיקה',
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
