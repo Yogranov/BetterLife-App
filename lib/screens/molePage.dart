@@ -1,4 +1,6 @@
+import 'package:betterlife/models/User.dart';
 import 'package:betterlife/models/mole.dart';
+import 'package:betterlife/screens/addDetailsToMole.dart';
 import 'package:betterlife/screens/home.dart';
 import 'package:betterlife/shared_ui/constant.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -9,8 +11,10 @@ import 'package:betterlife/shared_ui/shared_ui.dart';
 
 class MolePage extends StatelessWidget {
   
+  User user;
   Mole mole;
-  MolePage({this.mole});
+  
+  MolePage({this.mole, this.user});
   ScrollController _scrollController = new ScrollController();
   
   @override
@@ -19,12 +23,23 @@ class MolePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Home.backgroundColor,
-          title: Text(
-            "${mole.location} - ${DateFormat('d/MM/yy k:mm').format(mole.createTime)}",
-            style: TextStyle(
-              color: Colors.grey[200],
-              fontSize: 18
-            ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                "${mole.location} - ${DateFormat('d/MM/yy k:mm').format(mole.createTime)}",
+                style: TextStyle(
+                  color: Colors.grey[200],
+                  fontSize: 18
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.add_a_photo, color: Colors.white, size: 28.0,),
+                onPressed: () => showModalBottomSheet(context: context,isScrollControlled: true , builder: (context) {
+                  return AddDetailsToMole(user: user, moleId: mole.id,);
+                }),
+              ),
+            ],
           ),
           centerTitle: true,
         ),

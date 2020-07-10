@@ -13,18 +13,12 @@ class _WrapperState extends State<Wrapper> {
 
   SharedPreferences sharedPreferences;
 
-  @override
-  void initState() {
-    super.initState();
-    checkLoginStatus();
-  }
-
   checkLoginStatus() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     if(pref.getString("UserToken") == null)
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Login()), (Route<dynamic> route) => false);
     else
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Home(token: pref.getString("UserToken"),)), (Route<dynamic> route) => false);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Home(token: pref.getString("UserToken"),)), (Route<dynamic> route) => false);  
   }
 
   @override
