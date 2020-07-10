@@ -182,19 +182,15 @@ class _AddDetailsToMole extends State<AddDetailsToMole> {
       'color': color,
       'image': base64Image,
     };
-    print(data);
 
     final url = "https://betterlife.845.co.il/api/flutter/addDetailsToMole.php";
     setState(() {
       submitLoading = true;
     });
 
-
     var response = await http.post(url, body: data);
 
-
     if (response.statusCode == 200) {
-      
       Navigator.pop(context);
     } else {
       print("Error getting data.");

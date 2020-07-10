@@ -1,4 +1,3 @@
-import 'package:betterlife/models/User.dart';
 import 'package:flutter/material.dart';
 
 const textInputDecoration = InputDecoration(

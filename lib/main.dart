@@ -1,11 +1,5 @@
-import 'dart:developer';
-
-import 'package:betterlife/screens/home.dart';
-import 'package:betterlife/screens/login.dart';
 import 'package:betterlife/wrapper.dart';
-import 'package:flare_loading/flare_loading.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());

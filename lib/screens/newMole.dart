@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
-import 'package:path/path.dart' as path;
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 
@@ -196,10 +194,7 @@ class _NewMoleState extends State<NewMole> {
       submitLoading = true;
     });
 
-
     var response = await http.post(url, body: data);
-
-    print(response.statusCode);
 
     if (response.statusCode == 200) {
       Home.currentPage = 0;

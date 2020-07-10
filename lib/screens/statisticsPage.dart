@@ -1,13 +1,8 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:betterlife/models/User.dart';
 import 'package:betterlife/shared_ui/indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'home.dart';
 
 class StatisticsPage extends StatefulWidget {
   Map statistics;
