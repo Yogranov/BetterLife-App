@@ -157,7 +157,7 @@ class _NewMoleState extends State<NewMole> {
             SizedBox(height: 30,),
             Center(
               child: RaisedButton(
-                color: Colors.pink[400],
+                color: Colors.blueGrey[400],
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 20),
                   child: submitLoading ? CircularProgressIndicator() : Text(
