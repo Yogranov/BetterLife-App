@@ -1,4 +1,7 @@
+import 'package:betterlife/screens/signUp.dart';
 import 'package:betterlife/shared_ui/constant.dart';
+import 'package:flare_flutter/flare_actor.dart';
+import 'package:flare_loading/flare_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,15 +62,15 @@ class _LoginState extends State<Login> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            'assets/logo.png',
-                            width: 100,
-                            height: 100,
+                        Container(
+                          height: 200,
+                          child: FlareActor(
+                            "assets/flare/betterlife-logo.flr",
+                            alignment:Alignment.center,
+                            fit:BoxFit.contain,
+                            animation:"play"
                           ),
                         ),
-                        SizedBox(height: 20),
                         Card(
                           elevation: 4.0,
                           color: Colors.white,
@@ -161,10 +164,10 @@ class _LoginState extends State<Login> {
                           padding: const EdgeInsets.only(top: 20),
                           child: InkWell(
                             onTap: () {
-                              // Navigator.push(
-                              //     context,
-                              //     new MaterialPageRoute(
-                              //         builder: (context) => SignUp()));
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (context) => SignUp()));
                             },
                             child: Text(
                               'צור משתמש חדש',

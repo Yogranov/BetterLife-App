@@ -91,6 +91,15 @@ class _SettingsState extends State<Settings> {
     return parsed.map<City>((json) => City.fromJson(json)).toList();
   }
 
+  void bioLock(bool lockOrNot) {
+    if(lockOrNot)
+      pref.setBool('bioLock', true);
+    else
+      if(pref.getBool('bioLock') != null)
+        pref.remove('bioLock');
+  }
+
+
   @override
   void initState() {
     preperePref();
@@ -144,6 +153,19 @@ class _SettingsState extends State<Settings> {
                       ),
                     ],
                   ),
+
+                  CheckboxListTile(
+                    title: Text("נעילה"),
+                    
+                    value: pref.getBool('bioLock') ?? false,
+                    onChanged: (newValue) { 
+                      setState(() {
+                        bioLock(newValue); 
+                      }); 
+                    },
+                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                  ),
+
 
                   Padding(
                     padding: EdgeInsets.only(right: 12, top: 20, bottom: 5),
