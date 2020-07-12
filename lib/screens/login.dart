@@ -46,11 +46,12 @@ class _LoginState extends State<Login> {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      stops: [0.0, 0.4, 0.9],
+                      stops: [0.0, 0.4,0.7, 0.9],
                       colors: [
-                        Color(0xFFFF835F),
-                        Color(0xFFFC663C),
-                        Color(0xFFFF3F1A),
+                        Colors.blue,
+                        Color(0xBBFC663C),
+                        Color(0xCCFC663C),
+                        Colors.blue[900],
                       ],
                     ),
                   ),

@@ -74,7 +74,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       style: TextStyle(fontSize: 18)),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(backgroundImage: AssetImage('assets/moleSymbol.png')),
+                      child: CircleAvatar(backgroundImage: AssetImage('assets/stethoscope.png')),
                     ),
                   ],
                 ),
@@ -83,11 +83,17 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
             ],
           ),
-          SizedBox(height: 100,),
+          SizedBox(height: 80,),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Text("סיכום אבחון רופאים"),
+                Text(
+                  "סיכום אבחון ",
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 24
+                  ),
+                ),
                 Row(
                 children: <Widget>[
                   Expanded(
