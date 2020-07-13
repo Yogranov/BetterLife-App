@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:betterlife/models/City.dart';
 import 'package:betterlife/screens/login.dart';

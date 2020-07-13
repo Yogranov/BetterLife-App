@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:betterlife/models/User.dart';
-import 'package:betterlife/screens/home.dart';
 import 'package:betterlife/shared_ui/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
-import 'package:path/path.dart' as path;
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 

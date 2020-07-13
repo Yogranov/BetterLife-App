@@ -1,7 +1,6 @@
 import 'package:betterlife/screens/signUp.dart';
 import 'package:betterlife/shared_ui/constant.dart';
 import 'package:flare_flutter/flare_actor.dart';
-import 'package:flare_loading/flare_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,8 +1,3 @@
-import 'package:betterlife/shared_ui/constant.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
-
-
 class City {
   int cityId;
   String hebrewName;

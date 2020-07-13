@@ -4,7 +4,6 @@ import 'package:betterlife/shared_ui/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-
 import 'Address.dart';
 
 class User {

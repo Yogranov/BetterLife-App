@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:betterlife/models/mole-details.dart';
 import 'package:intl/intl.dart';
 

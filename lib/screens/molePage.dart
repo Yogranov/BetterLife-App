@@ -1,7 +1,6 @@
 import 'package:betterlife/models/User.dart';
 import 'package:betterlife/models/mole.dart';
 import 'package:betterlife/screens/addDetailsToMole.dart';
-import 'package:betterlife/screens/home.dart';
 import 'package:betterlife/shared_ui/constant.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
