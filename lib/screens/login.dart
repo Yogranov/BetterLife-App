@@ -203,9 +203,6 @@ class _LoginState extends State<Login> {
 
       
       final url = "https://betterlife.845.co.il/api/flutter/login.php";
-      // setState(() {
-      //   submitLoading = true;
-      // });
       var response = await http.post(url, body: data);
       var jsonData;
       if (response.statusCode == 200)
@@ -215,9 +212,34 @@ class _LoginState extends State<Login> {
       
       
       if(jsonData['Token'] != null) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('UserToken', jsonData['Token']);
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Home(token: jsonData['Token'],)), (Route<dynamic> route) => false);
+        if(jsonData['Enable'] == 1){
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('UserToken', jsonData['Token']);
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => Home(token: jsonData['Token'],)), (Route<dynamic> route) => false);
+        } else {
+          Alert(
+          context: context,
+          type: AlertType.warning,
+          title: "שגיאה",
+          buttons: [
+          DialogButton(
+            child: Text(
+              "סגור",
+              style: TextStyle(color: Colors.white, fontSize: 14),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+            height: 40,
+          )
+        ],
+          desc: 'משתמש חסום'
+        ).show();
+        }
+
+        setState(() {
+          _isLoading = false;
+        });
+        
       }
       else {
         setState(() {

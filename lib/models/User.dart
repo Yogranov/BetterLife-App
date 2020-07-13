@@ -22,12 +22,12 @@ class User {
   int sex;
   List<Mole> moles;
   Map statistics;
-  
-  User({this.id, this.email, this.firstName, this.lastName, this.token, this.phoneNumber, this.address, this.birthdate, this.haveHistory, this.personId, this.sex});
+  bool enable;
+
+  User({this.id, this.email, this.firstName, this.lastName, this.token, this.phoneNumber, this.address, this.birthdate, this.haveHistory, this.personId, this.sex, this.enable});
 
   static Future<User> getUserByToken(String token) async {
     String url = 'https://betterlife.845.co.il/api/flutter/getUserData.php';
-
     Map data = {
       'TOKEN': Constant.apiToken,
       'userToken': token
@@ -38,7 +38,7 @@ class User {
       jsonData = convert.jsonDecode(response.body);
     else
       print('Request failed with status: ${response.statusCode}.');
-    
+
     Address address = await Address.getCity(jsonData['address'], jsonData['cityId']);
 
     User user =  User(
@@ -47,12 +47,13 @@ class User {
       firstName: jsonData['FirstName'],
       lastName: jsonData['LastName'],
       token: token,
-      phoneNumber: jsonData["phoneNumber"],
+      phoneNumber: jsonData["PhoneNumber"],
       address: address,
-      birthdate: DateTime.parse(jsonData['birthdate']),
-      personId: jsonData['personId'],
-      haveHistory: jsonData['haveHistory'],
-      sex: jsonData['sex'],
+      birthdate: DateTime.parse(jsonData['Birthdate']),
+      personId: jsonData['PersonId'],
+      haveHistory: jsonData['HaveHistory'],
+      sex: jsonData['Sex'],
+      enable: jsonData['Enable'] == 1 ? true : false,
     );
 
     user.moles = await user.getMoles();

@@ -224,7 +224,7 @@ class _SettingsState extends State<Settings> {
                             validator: (val) => val.isEmpty ? 'אנא הכנס שם פרטי' : null,
                             onChanged: (val) {
                               setState(() => firstName = val);
-                              }
+                            }
                           ),
                         ),
                       ),
@@ -243,7 +243,7 @@ class _SettingsState extends State<Settings> {
                             validator: (val) => val.isEmpty ? 'אנא הכנס שם משפחה' : null,
                             onChanged: (val) {
                               setState(() => lastName = val);
-                              }
+                            }
                           ),
                         ),
                       ),
@@ -281,7 +281,7 @@ class _SettingsState extends State<Settings> {
                             validator: (val) => val.isEmpty ? 'אנא הכנס דואר אלקטרוני' : null,
                             onChanged: (val) {
                               setState(() => email = val);
-                              }
+                            }
                           ),
                         ),
                       ),
@@ -300,7 +300,7 @@ class _SettingsState extends State<Settings> {
                             validator: (val) => val.isEmpty ? 'אנא הכנס תעודת זהות' : null,
                             onChanged: (val) {
                               setState(() => personId = val);
-                              }
+                            }
                           ),
                         ),
                       ),
@@ -319,7 +319,7 @@ class _SettingsState extends State<Settings> {
                             validator: (val) => val.isEmpty ? 'אנא הכנס כתובת' : null,
                             onChanged: (val) {
                               setState(() => street = val);
-                              }
+                            }
                           ),
                         ),
                       ),
