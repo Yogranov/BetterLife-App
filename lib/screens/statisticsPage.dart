@@ -69,7 +69,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                   children: <Widget>[
                     SizedBox(height: 10,),
                     Text(
-                      "בדיקה אחרונה בוצע לפני ${widget.user.statistics["lastCheck"]} ימים",
+                      "בדיקה אחרונה בוצעה לפני ${widget.user.statistics["lastCheck"]} ימים",
                       textAlign: TextAlign.right,
                       style: TextStyle(fontSize: 18)),
                     Padding(
