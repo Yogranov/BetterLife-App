@@ -1,16 +1,13 @@
-# betterlife
+Betterlife system allow you to check in real time skin moles.
+The system have an AI that trained on 10K photos.
 
-A new Flutter project.
+It's not just AI, your photos will diagnose by real doctors,
+you will be notify when the mole was check by one of the doctors.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+Easy to use:
+1. login / register
+2. scan your skin mole
+3. refresh to get results
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Good luck!
